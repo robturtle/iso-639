@@ -548,8 +548,19 @@ class ISO_639 < Array
   ISO_639_1 = ISO_639_2.collect do |entry|
     entry unless entry[2].empty?
   end.compact.freeze
+  
+  ALPHA2_CODES = Set.new(ISO_639_1.map { |row| row[2] }).freeze
+  ENGLISH_NAMES = Set.new(ISO_639_1.map { |row| row[3] }).freeze
 
   class << self
+    def alpha2_codes
+      ALPHA2_CODES
+    end
+    
+    def english_names
+      ENGLISH_NAMES
+    end
+
     # Returns the entry array for an alpha-2 or alpha-3 code
     def find_by_code(code)
       return if code.nil?
